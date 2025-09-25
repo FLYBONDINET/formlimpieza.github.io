@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Limpieza - Registro</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="assets/js/config.js"></script>
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+  <header>Flybondi · Registro de Limpieza</header>
+  <main>
+    <form id="cleaningForm" class="card" enctype="multipart/form-data">
+      <div class="grid grid-2">
+        <div>
+          <label>Fecha</label>
+          <input type="date" id="fecha" name="fecha" required>
+        </div>
+        <div>
+          <label>Matrícula</label>
+          <select id="matricula" name="matricula" required></select>
+        </div>
+        <div>
+          <label>Escala (IATA)</label>
+          <select id="escala" name="escala" required>
+            <option value="">Seleccionar…</option>
+            <option value="C">C</option>
+          </select>
+        </div>
+        <div>
+          <label>Aeropuerto</label>
+          <select id="aeropuerto" name="aeropuerto" required>
+            <option value="">Seleccionar…</option>
+            <option value="AP">AP (Aeroparque)</option>
+            <option value="EZE">EZE (Ezeiza)</option>
+            <option value="COR">COR (Córdoba)</option>
+            <option value="MDZ">MDZ (Mendoza)</option>
+          </select>
+        </div>
+        <div>
+          <label>Posición</label>
+          <input type="text" id="posicion" name="posicion" placeholder="Ej: B23" required>
+        </div>
+        <div>
+          <label>Tipo de limpieza</label>
+          <select id="tipo_limpieza" name="tipo_limpieza" required>
+            <option value="">Seleccionar…</option>
+            <option>Limpieza superficial</option>
+            <option>Limpieza completa</option>
+            <option>Limpieza profunda plus</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Hora inicio</label>
+          <div class="row">
+            <input type="time" id="horaInicio" name="hora_inicio" required>
+            <button type="button" id="btnInicio" class="btn-outline">Marcar ahora</button>
+          </div>
+        </div>
+        <div>
+          <label>Hora fin</label>
+          <div class="row">
+            <input type="time" id="horaFin" name="hora_fin" required>
+            <button type="button" id="btnFin" class="btn-outline">Marcar ahora</button>
+          </div>
+        </div>
+        <div>
+          <label>Responsable de limpieza</label>
+          <input type="text" id="responsable" name="responsable_limpieza" required>
+        </div>
+        <div>
+          <label>Firma (dibujar)</label>
+          <canvas id="firmaLimpieza" class="signature-pad"></canvas>
+          <div class="row" style="margin-top:8px"><button type="button" id="btnBorrarFirma" class="btn-outline">Borrar firma</button></div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label>Observaciones</label>
+          <textarea id="observaciones" name="observaciones" placeholder="Novedades, hallazgos, etc."></textarea>
+        </div>
+        <div>
+          <label>Adjuntos (fotos, videos, etc.)</label>
+          <input type="file" name="adjuntos" multiple>
+          <p class="small">Se guardarán en Drive dentro de la carpeta de la matrícula y se listarán como links en la hoja.</p>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <button type="submit" class="btn">Enviar</button>
+        <a class="btn-outline" href="list.html">Historial</a>
+      </div>
+    </form>
+  </main>
+  <footer>© Flybondi • Limpiezas</footer>
+</body>
+</html>

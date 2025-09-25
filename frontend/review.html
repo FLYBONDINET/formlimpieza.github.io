@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detalle & Recepción</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="assets/js/config.js"></script>
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+<header>Flybondi · Detalle de Limpieza (Solo lectura) & Recepción</header>
+<main>
+  <div class="card">
+    <h3>Datos registrados por Limpieza</h3>
+    <div class="grid grid-2">
+      <div><label>ID</label><div id="ro_id" class="badge"></div></div>
+      <div><label>Fecha</label><div id="ro_fecha_limpieza"></div></div>
+      <div><label>Matrícula</label><div id="ro_matricula"></div></div>
+      <div><label>Escala</label><div id="ro_escala"></div></div>
+      <div><label>Aeropuerto</label><div id="ro_aeropuerto"></div></div>
+      <div><label>Posición</label><div id="ro_posicion"></div></div>
+      <div><label>Tipo de limpieza</label><div id="ro_tipo_limpieza"></div></div>
+      <div><label>Hora inicio</label><div id="ro_hora_inicio"></div></div>
+      <div><label>Hora fin</label><div id="ro_hora_fin"></div></div>
+      <div><label>Responsable limpieza</label><div id="ro_responsable_limpieza"></div></div>
+      <div><label>Observaciones</label><div id="ro_observaciones"></div></div>
+      <div><label>Adjuntos limpieza</label><div id="adj_clean"></div></div>
+      <div><label>Estado</label><div id="ro_estado" class="badge"></div></div>
+      <div><label>PDF</label><div><a id="pdf_link" target="_blank">Abrir PDF</a></div></div>
+    </div>
+  </div>
+
+  <form id="recepForm" class="card" enctype="multipart/form-data">
+    <h3>Recepción de Aeronave Limpia</h3>
+    <div class="grid grid-2">
+      <div>
+        <label>Fecha</label>
+        <input type="date" id="recep_fecha" name="recepcion_fecha" required>
+      </div>
+      <div>
+        <label>Hora firma</label>
+        <div class="row">
+          <input type="time" id="recep_hora" name="recepcion_hora" required>
+          <button type="button" id="btnHoraRecep" class="btn-outline">Marcar ahora</button>
+        </div>
+      </div>
+      <div>
+        <label>Responsable que recibe</label>
+        <input type="text" name="recepcion_nombre" required>
+      </div>
+      <div>
+        <label>Legajo</label>
+        <input type="text" name="recepcion_legajo" required>
+      </div>
+      <div>
+        <label>Conformidad</label>
+        <select name="recepcion_conforme" required>
+          <option value="">Seleccionar…</option>
+          <option value="Si">Conforme</option>
+          <option value="No">No conforme</option>
+        </select>
+      </div>
+      <div>
+        <label>Firma (dibujar)</label>
+        <canvas id="firmaRecepcion" class="signature-pad"></canvas>
+        <div class="row" style="margin-top:8px"><button type="button" id="btnBorrarFirmaR" class="btn-outline">Borrar firma</button></div>
+      </div>
+    </div>
+    <div class="grid">
+      <div>
+        <label>Observaciones</label>
+        <textarea name="recepcion_observaciones"></textarea>
+      </div>
+      <div>
+        <label>Adjuntos recepción</label>
+        <input type="file" name="recepcion_adjuntos" multiple>
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" type="submit">Enviar Recepción</button>
+      <a class="btn-outline" href="list.html">Volver</a>
+    </div>
+  </form>
+</main>
+<footer>© Flybondi • Limpiezas</footer>
+</body>
+</html>

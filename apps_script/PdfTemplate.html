@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body{ font-family:Arial, sans-serif; font-size:12px; color:#111; }
+    .hdr{ display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #ffd200; padding-bottom:8px; margin-bottom:12px; }
+    .brand{ font-weight:700; font-size:18px; color:#222; }
+    .tag{ background:#ffd200; padding:2px 8px; border-radius:12px; font-weight:700; }
+    table{ width:100%; border-collapse:collapse; margin:8px 0; }
+    th,td{ border:1px solid #ddd; padding:6px; text-align:left; }
+    .sec{ margin-top:12px; }
+    .sig{ height:70px; border:1px dashed #ccc; display:inline-block; padding:4px; }
+    .small{ color:#666; font-size:10px; }
+  </style>
+</head>
+<body>
+  <div class="hdr">
+    <div class="brand">Flybondi · Acta de Limpieza</div>
+    <div class="tag"><?= data.estado || "Pendiente"; ?></div>
+  </div>
+  <div class="small">ID: <?= data.id ?> · Fecha: <?= data.fecha ?> · Matrícula: <?= data.matricula ?></div>
+
+  <div class="sec">
+    <h3>Datos de Servicio</h3>
+    <table>
+      <tr><th>Escala</th><td><?= data.escala ?></td><th>Aeropuerto</th><td><?= data.aeropuerto ?></td></tr>
+      <tr><th>Posición</th><td><?= data.posicion ?></td><th>Tipo Limpieza</th><td><?= data.tipo ?></td></tr>
+      <tr><th>Hora Inicio</th><td><?= data.hora_inicio ?></td><th>Hora Fin</th><td><?= data.hora_fin ?></td></tr>
+      <tr><th>Responsable Limpieza</th><td colspan="3"><?= data.responsable_limpieza ?></td></tr>
+      <tr><th>Observaciones</th><td colspan="3"><?= data.observaciones || "-" ?></td></tr>
+    </table>
+  </div>
+
+  <div class="sec">
+    <h3>Recepción</h3>
+    <table>
+      <tr><th>Fecha</th><td><?= data.recepcion_fecha || "-" ?></td><th>Hora</th><td><?= data.recepcion_hora || "-" ?></td></tr>
+      <tr><th>Responsable</th><td><?= data.recepcion_nombre || "-" ?></td><th>Legajo</th><td><?= data.recepcion_legajo || "-" ?></td></tr>
+      <tr><th>Conformidad</th><td><?= data.recepcion_conforme || "-" ?></td><th>Observaciones</th><td><?= data.recepcion_observaciones || "-" ?></td></tr>
+    </table>
+  </div>
+
+  <div class="sec">
+    <h3>Firmas</h3>
+    <table>
+      <tr>
+        <th>Limpieza</th><th>Recepción</th>
+      </tr>
+      <tr>
+        <td>
+          <? if(data.firma_limpieza_fileId){ ?>
+            <img class="sig" src="<?= 'https://drive.google.com/uc?id='+data.firma_limpieza_fileId ?>">
+          <? } else { ?>
+            <div class="sig"></div>
+          <? } ?>
+        </td>
+        <td>
+          <? if(data.firma_recepcion_fileId){ ?>
+            <img class="sig" src="<?= 'https://drive.google.com/uc?id='+data.firma_recepcion_fileId ?>">
+          <? } else { ?>
+            <div class="sig"></div>
+          <? } ?>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="small">Documento generado automáticamente.</div>
+</body>
+</html>

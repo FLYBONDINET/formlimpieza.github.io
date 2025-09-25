@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Historial y KPIs</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="assets/js/config.js"></script>
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+  <header>Flybondi · Historial & KPIs</header>
+  <main id="listPage">
+    <div class="grid grid-3">
+      <div class="kpi"><strong>Total</strong><div id="k_total">0</div></div>
+      <div class="kpi"><strong>Aceptadas</strong><div id="k_acept">0</div></div>
+      <div class="kpi"><strong>No aceptadas</strong><div id="k_noacept">0</div></div>
+      <div class="kpi"><strong>Pendientes</strong><div id="k_pend">0</div></div>
+      <div class="kpi"><strong>Mes actual</strong><div id="k_mes">0</div></div>
+      <div class="kpi"><strong>Año actual</strong><div id="k_anio">0</div></div>
+    </div>
+
+    <div class="card">
+      <div class="row" style="justify-content:space-between; align-items:center">
+        <h2 style="margin:0">Registros</h2>
+        <a class="btn-outline" href="index.html">+ Nuevo</a>
+      </div>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Fecha</th><th>Matrícula</th><th>Escala/Aerop</th><th>Tipo</th><th>Estado</th><th></th></tr>
+        </thead>
+        <tbody id="tbody"><tr><td colspan="7">Cargando…</td></tr></tbody>
+      </table>
+    </div>
+  </main>
+  <footer>© Flybondi • Limpiezas</footer>
+</body>
+</html>
