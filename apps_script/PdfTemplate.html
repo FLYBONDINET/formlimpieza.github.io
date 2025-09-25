@@ -19,14 +19,13 @@
     <div class="brand">Flybondi · Acta de Limpieza</div>
     <div class="tag"><?= data.estado || "Pendiente"; ?></div>
   </div>
-  <div class="small">ID: <?= data.id ?> · Fecha: <?= data.fecha ?> · Matrícula: <?= data.matricula ?></div>
+  <div class="small">ID: <?= data.id ?> · Fecha: <?= data.fecha_fmt ?> · Matrícula: <?= data.matricula ?></div>
 
   <div class="sec">
     <h3>Datos de Servicio</h3>
     <table>
-      <tr><th>Escala</th><td><?= data.escala ?></td><th>Aeropuerto</th><td><?= data.aeropuerto ?></td></tr>
-      <tr><th>Posición</th><td><?= data.posicion ?></td><th>Tipo Limpieza</th><td><?= data.tipo ?></td></tr>
-      <tr><th>Hora Inicio</th><td><?= data.hora_inicio ?></td><th>Hora Fin</th><td><?= data.hora_fin ?></td></tr>
+      <tr><th>Aeropuerto</th><td><?= data.aeropuerto ?></td><th>Posición</th><td><?= data.posicion ?></td></tr>
+      <tr><th>Tipo Limpieza</th><td><?= data.tipo ?></td><th>Horas</th><td><?= (data.hora_inicio_fmt||"-") + " / " + (data.hora_fin_fmt||"-") ?></td></tr>
       <tr><th>Responsable Limpieza</th><td colspan="3"><?= data.responsable_limpieza ?></td></tr>
       <tr><th>Observaciones</th><td colspan="3"><?= data.observaciones || "-" ?></td></tr>
     </table>
@@ -44,20 +43,18 @@
   <div class="sec">
     <h3>Firmas</h3>
     <table>
-      <tr>
-        <th>Limpieza</th><th>Recepción</th>
-      </tr>
+      <tr><th>Limpieza</th><th>Recepción</th></tr>
       <tr>
         <td>
-          <? if(data.firma_limpieza_fileId){ ?>
-            <img class="sig" src="<?= 'https://drive.google.com/uc?id='+data.firma_limpieza_fileId ?>">
+          <? if(data.firma_limpieza_dataUrl){ ?>
+            <img class="sig" src="<?= data.firma_limpieza_dataUrl ?>">
           <? } else { ?>
             <div class="sig"></div>
           <? } ?>
         </td>
         <td>
-          <? if(data.firma_recepcion_fileId){ ?>
-            <img class="sig" src="<?= 'https://drive.google.com/uc?id='+data.firma_recepcion_fileId ?>">
+          <? if(data.firma_recepcion_dataUrl){ ?>
+            <img class="sig" src="<?= data.firma_recepcion_dataUrl ?>">
           <? } else { ?>
             <div class="sig"></div>
           <? } ?>

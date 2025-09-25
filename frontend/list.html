@@ -3,14 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Historial y KPIs</title>
+  <title>Flybondi · Historial de Limpiezas</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <script defer src="assets/js/config.js"></script>
   <script defer src="assets/js/main.js"></script>
 </head>
-<body>
-  <header>Flybondi · Historial & KPIs</header>
-  <main id="listPage">
+<body data-page="list">
+  <header>
+    <div class="header-inner">
+      <img src="assets/img/flybondi-logo.svg" alt="Flybondi">
+      <div class="header-title">Historial de Limpiezas</div>
+    </div>
+  </header>
+  <main>
     <div class="grid grid-3">
       <div class="kpi"><strong>Total</strong><div id="k_total">0</div></div>
       <div class="kpi"><strong>Aceptadas</strong><div id="k_acept">0</div></div>
@@ -21,18 +26,43 @@
     </div>
 
     <div class="card">
-      <div class="row" style="justify-content:space-between; align-items:center">
-        <h2 style="margin:0">Registros</h2>
-        <a class="btn-outline" href="index.html">+ Nuevo</a>
+      <div class="toolbar">
+        <div>
+          <label>Búsqueda</label>
+          <input type="text" id="f_query" placeholder="Matrícula, aeropuerto, tipo, estado…">
+        </div>
+        <div>
+          <label>Desde (fecha)</label>
+          <input type="date" id="f_from">
+        </div>
+        <div>
+          <label>Hasta (fecha)</label>
+          <input type="date" id="f_to">
+        </div>
+        <div>
+          <label>&nbsp;</label><br>
+          <a class="btn-outline" href="index.html">+ Nuevo</a>
+        </div>
       </div>
+
       <table>
         <thead>
-          <tr><th>ID</th><th>Fecha</th><th>Matrícula</th><th>Escala/Aerop</th><th>Tipo</th><th>Estado</th><th></th></tr>
+          <tr>
+            <th class="center">ID</th>
+            <th class="center">Fecha</th>
+            <th class="center">Matrícula</th>
+            <th class="center">Aeropuerto</th>
+            <th class="center">Tipo</th>
+            <th class="center">Estado</th>
+            <th class="center">Acción</th>
+          </tr>
         </thead>
-        <tbody id="tbody"><tr><td colspan="7">Cargando…</td></tr></tbody>
+        <tbody id="tbody">
+          <tr><td colspan="7" class="center">Cargando…</td></tr>
+        </tbody>
       </table>
+      <div class="footer-note">Las filas <b>pendientes</b> se muestran en rojo claro; las <b>cerradas</b> (firmadas) en verde.</div>
     </div>
   </main>
-  <footer>© Flybondi • Limpiezas</footer>
 </body>
 </html>
