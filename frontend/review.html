@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Flybondi · Detalle & Recepción</title>
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#ffd200">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css" />
   <script defer src="assets/js/config.js"></script>
-  <script defer src="assets/js/pwa.js"></script>
+  <script>
+    (function(){
+      if (!window.WEB_APP_URL || typeof WEB_APP_URL !== 'string') {
+        window.WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyYhr6o0emb9JUUUbBA4Rmh3D-lzwztsmdLZICClnMzkfL_cvtOp5xZX_J3tgHyomLk/exec";
+      }
+    })();
+  </script>
   <script defer src="assets/js/main.js"></script>
 </head>
 <body data-page="review">
   <header>
     <div class="header-inner">
-      <img src="assets/img/flybondi-logo.svg" alt="Flybondi">
+      <img src="assets/img/flybondi-logo.svg" alt="Flybondi" />
       <div class="header-title">Detalle de Limpieza & Recepción</div>
     </div>
   </header>
@@ -43,22 +47,22 @@
       <div class="grid grid-2">
         <div>
           <div class="label">Fecha</div>
-          <input type="date" id="recep_fecha" name="recepcion_fecha" required>
+          <input type="date" id="recep_fecha" name="recepcion_fecha" required />
         </div>
         <div>
           <div class="label">Hora firma</div>
           <div class="row">
-            <input type="time" id="recep_hora" name="recepcion_hora" required>
+            <input type="time" id="recep_hora" name="recepcion_hora" required />
             <button type="button" id="btnHoraRecep" class="btn-ghost">Marcar ahora</button>
           </div>
         </div>
         <div>
           <div class="label">Responsable que recibe</div>
-          <input type="text" name="recepcion_nombre" required>
+          <input type="text" name="recepcion_nombre" required />
         </div>
         <div>
           <div class="label">Legajo</div>
-          <input type="text" name="recepcion_legajo" required>
+          <input type="text" name="recepcion_legajo" required />
         </div>
         <div>
           <div class="label">Conformidad</div>
@@ -71,7 +75,9 @@
         <div>
           <div class="label">Firma (dibujar)</div>
           <canvas id="firmaRecepcion" class="signature-pad"></canvas>
-          <div class="row" style="margin-top:8px"><button type="button" id="btnBorrarFirmaR" class="btn-ghost">Borrar firma</button></div>
+          <div class="row" style="margin-top:8px">
+            <button type="button" id="btnBorrarFirmaR" class="btn-ghost">Borrar firma</button>
+          </div>
         </div>
       </div>
       <div class="grid">
@@ -81,7 +87,7 @@
         </div>
         <div>
           <div class="label">Adjuntos recepción</div>
-          <input type="file" name="recepcion_adjuntos" multiple>
+          <input type="file" name="recepcion_adjuntos" multiple />
         </div>
       </div>
       <div class="actions">
