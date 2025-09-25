@@ -19,61 +19,61 @@
   <header>
     <div class="header-inner">
       <img src="assets/img/flybondi-logo.svg" alt="Flybondi" />
-      <div class="header-title">Detalle de Limpieza & Recepción</div>
+      <div class="header-title">Detalle de Limpieza & Recepción / Cleaning & Handover Details</div>
     </div>
   </header>
   <main>
     <div class="card">
-      <h2>Datos registrados por Limpieza</h2>
+      <h2>Datos registrados por Limpieza / Cleaning Recorded Data</h2>
       <div class="grid grid-2">
         <div><div class="label">ID</div><div id="ro_id" class="badge"></div></div>
-        <div><div class="label">Fecha</div><div id="ro_fecha_limpieza"></div></div>
-        <div><div class="label">Matrícula</div><div id="ro_matricula"></div></div>
-        <div><div class="label">Aeropuerto</div><div id="ro_aeropuerto"></div></div>
-        <div><div class="label">Posición</div><div id="ro_posicion"></div></div>
-        <div><div class="label">Tipo de limpieza</div><div id="ro_tipo_limpieza"></div></div>
-        <div><div class="label">Hora inicio</div><div id="ro_hora_inicio"></div></div>
-        <div><div class="label">Hora fin</div><div id="ro_hora_fin"></div></div>
-        <div><div class="label">Responsable limpieza</div><div id="ro_responsable_limpieza"></div></div>
-        <div><div class="label">Observaciones</div><div id="ro_observaciones"></div></div>
-        <div><div class="label">Adjuntos limpieza</div><div id="adj_clean"></div></div>
-        <div><div class="label">Estado</div><div id="ro_estado" class="badge"></div></div>
+        <div><div class="label">Fecha / Date </div><div id="ro_fecha_limpieza"></div></div>
+        <div><div class="label">Matrícula / Registration</div><div id="ro_matricula"></div></div>
+        <div><div class="label">Aeropuerto / Airport</div><div id="ro_aeropuerto"></div></div>
+        <div><div class="label">Posición / Stand or Gate</div><div id="ro_posicion"></div></div>
+        <div><div class="label">Tipo de limpieza / Type of Cleaning</div><div id="ro_tipo_limpieza"></div></div>
+        <div><div class="label">Hora inicio / Start</div><div id="ro_hora_inicio"></div></div>
+        <div><div class="label">Hora fin / Finish</div><div id="ro_hora_fin"></div></div>
+        <div><div class="label">Responsable limpieza / Cleaning Supervisor</div><div id="ro_responsable_limpieza"></div></div>
+        <div><div class="label">Observaciones / Remarks</div><div id="ro_observaciones"></div></div>
+        <div><div class="label">Adjuntos limpieza / Attachments</div><div id="adj_clean"></div></div>
+        <div><div class="label">Estado / State</div><div id="ro_estado" class="badge"></div></div>
         <div><div class="label">PDF</div><div><a id="pdf_link" target="_blank">Abrir PDF</a></div></div>
       </div>
     </div>
 
     <form id="recepForm" class="card" enctype="multipart/form-data">
-      <h2>Recepción de Aeronave Limpia</h2>
+      <h2>Recepción de Aeronave Limpia / Reception of Clean Aircraft</h2>
       <div class="grid grid-2">
         <div>
-          <div class="label">Fecha</div>
+          <div class="label">Fecha / Date</div>
           <input type="date" id="recep_fecha" name="recepcion_fecha" required />
         </div>
         <div>
-          <div class="label">Hora firma</div>
+          <div class="label">Hora firma / Signature Time</div>
           <div class="row">
             <input type="time" id="recep_hora" name="recepcion_hora" required />
             <button type="button" id="btnHoraRecep" class="btn-ghost">Marcar ahora</button>
           </div>
         </div>
         <div>
-          <div class="label">Responsable que recibe</div>
+          <div class="label">Responsable que recibe / Receiving Supervisor</div>
           <input type="text" name="recepcion_nombre" required />
         </div>
         <div>
-          <div class="label">Legajo</div>
+          <div class="label">Legajo / Employee ID</div>
           <input type="text" name="recepcion_legajo" required />
         </div>
         <div>
-          <div class="label">Conformidad</div>
+          <div class="label">Conformidad / Compliance</div>
           <select name="recepcion_conforme" required>
-            <option value="">Seleccionar…</option>
-            <option value="Si">Conforme</option>
-            <option value="No">No conforme</option>
+            <option value="">Seleccionar…  / Select…</option>
+            <option value="Si">Conforme / Agreed</option>
+            <option value="No">No conforme / Non-Compliant</option>
           </select>
         </div>
         <div>
-          <div class="label">Firma (dibujar)</div>
+          <div class="label">Firma (dibujar) / Signature </div>
           <canvas id="firmaRecepcion" class="signature-pad"></canvas>
           <div class="row" style="margin-top:8px">
             <button type="button" id="btnBorrarFirmaR" class="btn-ghost">Borrar firma</button>
@@ -82,11 +82,11 @@
       </div>
       <div class="grid">
         <div>
-          <div class="label">Observaciones</div>
+          <div class="label">Observaciones / Remarks</div>
           <textarea name="recepcion_observaciones"></textarea>
         </div>
         <div>
-          <div class="label">Adjuntos recepción</div>
+          <div class="label">Adjuntos recepción / Attachments</div>
           <input type="file" name="recepcion_adjuntos" multiple />
         </div>
       </div>
