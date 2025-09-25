@@ -3,85 +3,89 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Detalle & Recepción</title>
+  <title>Flybondi · Detalle & Recepción</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <script defer src="assets/js/config.js"></script>
   <script defer src="assets/js/main.js"></script>
 </head>
-<body>
-<header>Flybondi · Detalle de Limpieza (Solo lectura) & Recepción</header>
-<main>
-  <div class="card">
-    <h3>Datos registrados por Limpieza</h3>
-    <div class="grid grid-2">
-      <div><label>ID</label><div id="ro_id" class="badge"></div></div>
-      <div><label>Fecha</label><div id="ro_fecha_limpieza"></div></div>
-      <div><label>Matrícula</label><div id="ro_matricula"></div></div>
-      <div><label>Aeropuerto</label><div id="ro_aeropuerto"></div></div>
-      <div><label>Posición</label><div id="ro_posicion"></div></div>
-      <div><label>Tipo de limpieza</label><div id="ro_tipo_limpieza"></div></div>
-      <div><label>Hora inicio</label><div id="ro_hora_inicio"></div></div>
-      <div><label>Hora fin</label><div id="ro_hora_fin"></div></div>
-      <div><label>Responsable limpieza</label><div id="ro_responsable_limpieza"></div></div>
-      <div><label>Observaciones</label><div id="ro_observaciones"></div></div>
-      <div><label>Adjuntos limpieza</label><div id="adj_clean"></div></div>
-      <div><label>Estado</label><div id="ro_estado" class="badge"></div></div>
-      <div><label>PDF</label><div><a id="pdf_link" target="_blank">Abrir PDF</a></div></div>
+<body data-page="review">
+  <header>
+    <div class="header-inner">
+      <img src="assets/img/flybondi-logo.svg" alt="Flybondi">
+      <div class="header-title">Detalle de Limpieza & Recepción</div>
     </div>
-  </div>
-
-  <form id="recepForm" class="card" enctype="multipart/form-data">
-    <h3>Recepción de Aeronave Limpia</h3>
-    <div class="grid grid-2">
-      <div>
-        <label>Fecha</label>
-        <input type="date" id="recep_fecha" name="recepcion_fecha" required>
+  </header>
+  <main>
+    <div class="card">
+      <h2>Datos registrados por Limpieza</h2>
+      <div class="grid grid-2">
+        <div><div class="label">ID</div><div id="ro_id" class="badge"></div></div>
+        <div><div class="label">Fecha</div><div id="ro_fecha_limpieza"></div></div>
+        <div><div class="label">Matrícula</div><div id="ro_matricula"></div></div>
+        <div><div class="label">Aeropuerto</div><div id="ro_aeropuerto"></div></div>
+        <div><div class="label">Posición</div><div id="ro_posicion"></div></div>
+        <div><div class="label">Tipo de limpieza</div><div id="ro_tipo_limpieza"></div></div>
+        <div><div class="label">Hora inicio</div><div id="ro_hora_inicio"></div></div>
+        <div><div class="label">Hora fin</div><div id="ro_hora_fin"></div></div>
+        <div><div class="label">Responsable limpieza</div><div id="ro_responsable_limpieza"></div></div>
+        <div><div class="label">Observaciones</div><div id="ro_observaciones"></div></div>
+        <div><div class="label">Adjuntos limpieza</div><div id="adj_clean"></div></div>
+        <div><div class="label">Estado</div><div id="ro_estado" class="badge"></div></div>
+        <div><div class="label">PDF</div><div><a id="pdf_link" target="_blank">Abrir PDF</a></div></div>
       </div>
-      <div>
-        <label>Hora firma</label>
-        <div class="row">
-          <input type="time" id="recep_hora" name="recepcion_hora" required>
-          <button type="button" id="btnHoraRecep" class="btn-outline">Marcar ahora</button>
+    </div>
+
+    <form id="recepForm" class="card" enctype="multipart/form-data">
+      <h2>Recepción de Aeronave Limpia</h2>
+      <div class="grid grid-2">
+        <div>
+          <div class="label">Fecha</div>
+          <input type="date" id="recep_fecha" name="recepcion_fecha" required>
+        </div>
+        <div>
+          <div class="label">Hora firma</div>
+          <div class="row">
+            <input type="time" id="recep_hora" name="recepcion_hora" required>
+            <button type="button" id="btnHoraRecep" class="btn-ghost">Marcar ahora</button>
+          </div>
+        </div>
+        <div>
+          <div class="label">Responsable que recibe</div>
+          <input type="text" name="recepcion_nombre" required>
+        </div>
+        <div>
+          <div class="label">Legajo</div>
+          <input type="text" name="recepcion_legajo" required>
+        </div>
+        <div>
+          <div class="label">Conformidad</div>
+          <select name="recepcion_conforme" required>
+            <option value="">Seleccionar…</option>
+            <option value="Si">Conforme</option>
+            <option value="No">No conforme</option>
+          </select>
+        </div>
+        <div>
+          <div class="label">Firma (dibujar)</div>
+          <canvas id="firmaRecepcion" class="signature-pad"></canvas>
+          <div class="row" style="margin-top:8px"><button type="button" id="btnBorrarFirmaR" class="btn-ghost">Borrar firma</button></div>
         </div>
       </div>
-      <div>
-        <label>Responsable que recibe</label>
-        <input type="text" name="recepcion_nombre" required>
+      <div class="grid">
+        <div>
+          <div class="label">Observaciones</div>
+          <textarea name="recepcion_observaciones"></textarea>
+        </div>
+        <div>
+          <div class="label">Adjuntos recepción</div>
+          <input type="file" name="recepcion_adjuntos" multiple>
+        </div>
       </div>
-      <div>
-        <label>Legajo</label>
-        <input type="text" name="recepcion_legajo" required>
+      <div class="actions">
+        <button class="btn-primary" type="submit">Enviar Recepción</button>
+        <a class="btn-ghost" href="list.html">Volver</a>
       </div>
-      <div>
-        <label>Conformidad</label>
-        <select name="recepcion_conforme" required>
-          <option value="">Seleccionar…</option>
-          <option value="Si">Conforme</option>
-          <option value="No">No conforme</option>
-        </select>
-      </div>
-      <div>
-        <label>Firma (dibujar)</label>
-        <canvas id="firmaRecepcion" class="signature-pad"></canvas>
-        <div class="row" style="margin-top:8px"><button type="button" id="btnBorrarFirmaR" class="btn-outline">Borrar firma</button></div>
-      </div>
-    </div>
-    <div class="grid">
-      <div>
-        <label>Observaciones</label>
-        <textarea name="recepcion_observaciones"></textarea>
-      </div>
-      <div>
-        <label>Adjuntos recepción</label>
-        <input type="file" name="recepcion_adjuntos" multiple>
-      </div>
-    </div>
-    <div class="row" style="margin-top:12px">
-      <button class="btn" type="submit">Enviar Recepción</button>
-      <a class="btn-outline" href="list.html">Volver</a>
-    </div>
-  </form>
-</main>
-<footer>© Flybondi • Limpiezas</footer>
+    </form>
+  </main>
 </body>
 </html>

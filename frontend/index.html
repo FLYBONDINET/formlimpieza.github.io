@@ -8,13 +8,13 @@
   <script defer src="assets/js/config.js"></script>
   <script defer src="assets/js/main.js"></script>
 </head>
-<body>
-  <div class="header">
+<body data-page="index">
+  <header>
     <div class="header-inner">
-      <img src="assets/img/flybondi-logo.svg" alt="Flybondi">
+      <img src="assets/img/Manual 2022-49.png" alt="Flybondi">
       <div class="header-title">Registro de Limpieza de Aeronaves</div>
     </div>
-  </div>
+  </header>
 
   <section class="hero">
     <div class="hero-card">
@@ -22,7 +22,7 @@
       <div class="hero-body">
         <div>
           <div class="hero-title">Operaciones de limpieza en línea</div>
-          <div class="hero-sub">Completar los datos de cada servicio. Los adjuntos se guardarán en Drive por año/mes/día y matrícula.</div>
+          <div class="hero-sub">Los adjuntos se guardan en Drive (año/mes/día/matrícula) y el PDF se genera automáticamente.</div>
         </div>
         <div class="row">
           <a href="list.html" class="btn-ghost">Ver historial</a>
@@ -49,10 +49,8 @@
             <div class="label">Aeropuerto</div>
             <select id="aeropuerto" name="aeropuerto" required>
               <option value="">Seleccionar…</option>
-              <option value="AP">AP (Aeroparque)</option>
+              <option value="AEP">AEP (Aeroparque)</option>
               <option value="EZE">EZE (Ezeiza)</option>
-              <option value="COR">COR (Córdoba)</option>
-              <option value="MDZ">MDZ (Mendoza)</option>
             </select>
           </div>
         </div>
@@ -79,7 +77,7 @@
               <input type="time" id="horaFin" name="hora_fin" required>
               <button type="button" id="btnFin" class="btn-ghost">Fin</button>
             </div>
-            <div class="tooltip">Podés ajustar manualmente si fue necesario.</div>
+            <div class="small">Podés ajustar manualmente si fue necesario.</div>
           </div>
         </div>
 
@@ -118,25 +116,13 @@
       <div class="card">
         <div class="section-title">Buenas prácticas</div>
         <div class="helper">
-          <div>✔</div>
-          <div>
-            <b>Documentá todo</b><br>
-            Subí fotos de cabina, galley y lavatorios cuando detectes no conformidades.
-          </div>
+          <div>✔</div><div><b>Documentá todo</b><br>Subí fotos de cabina, galley y lavatorios cuando detectes no conformidades.</div>
         </div>
         <div class="helper" style="margin-top:10px">
-          <div>⌚</div>
-          <div>
-            <b>Marcá los tiempos</b><br>
-            Usá los botones de <i>Inicio</i> y <i>Fin</i> para dejar registro exacto.
-          </div>
+          <div>⌚</div><div><b>Marcá los tiempos</b><br>Usá <i>Inicio</i> y <i>Fin</i> para dejar registro exacto.</div>
         </div>
         <div class="helper" style="margin-top:10px">
-          <div>✍️</div>
-          <div>
-            <b>Firmá en sitio</b><br>
-            La firma digital valida la identidad del responsable de limpieza.
-          </div>
+          <div>✍️</div><div><b>Firmá en sitio</b><br>La firma digital valida la identidad del responsable de limpieza.</div>
         </div>
       </div>
     </div>

@@ -11,11 +11,13 @@
 <body data-page="list">
   <header>
     <div class="header-inner">
-      <img src="assets/img/flybondi-logo.svg" alt="Flybondi">
+      <img src="assets/img/Manual 2022-49.png" alt="Flybondi">
       <div class="header-title">Historial de Limpiezas</div>
     </div>
   </header>
+
   <main>
+    <!-- KPIs -->
     <div class="grid grid-3">
       <div class="kpi"><strong>Total</strong><div id="k_total">0</div></div>
       <div class="kpi"><strong>Aceptadas</strong><div id="k_acept">0</div></div>
@@ -25,6 +27,7 @@
       <div class="kpi"><strong>Año actual</strong><div id="k_anio">0</div></div>
     </div>
 
+    <!-- Filtros -->
     <div class="card">
       <div class="toolbar">
         <div>
@@ -44,7 +47,11 @@
           <a class="btn-outline" href="index.html">+ Nuevo</a>
         </div>
       </div>
+    </div>
 
+    <!-- Pendientes -->
+    <div class="card" id="cardPend" style="display:none">
+      <h3 style="margin:0 0 10px 0;">Pendientes de recepción</h3>
       <table>
         <thead>
           <tr>
@@ -57,11 +64,33 @@
             <th class="center">Acción</th>
           </tr>
         </thead>
-        <tbody id="tbody">
+        <tbody id="tbodyPend">
           <tr><td colspan="7" class="center">Cargando…</td></tr>
         </tbody>
       </table>
-      <div class="footer-note">Las filas <b>pendientes</b> se muestran en rojo claro; las <b>cerradas</b> (firmadas) en verde.</div>
+      <div class="footer-note">Filas <b>pendientes</b> se muestran en rojo claro.</div>
+    </div>
+
+    <!-- Cerrados -->
+    <div class="card" id="cardCerr">
+      <h3 style="margin:0 0 10px 0;">Cerrados (Aceptadas / No aceptadas)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th class="center">ID</th>
+            <th class="center">Fecha</th>
+            <th class="center">Matrícula</th>
+            <th class="center">Aeropuerto</th>
+            <th class="center">Tipo</th>
+            <th class="center">Estado</th>
+            <th class="center">Acción</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyCerr">
+          <tr><td colspan="7" class="center">Cargando…</td></tr>
+        </tbody>
+      </table>
+      <div class="footer-note">Filas <b>cerradas</b> se muestran en verde claro.</div>
     </div>
   </main>
 </body>
