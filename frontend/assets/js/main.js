@@ -7,29 +7,10 @@ const fmtISO = x => { if(!x) return ''; if(/^\d{4}-\d{2}-\d{2}$/.test(x)) return
 const fmtHHMM = x => { if(!x) return ''; const m=/^(\d{2}):(\d{2})(?::\d{2})?$/.exec(x); if(m) return `${m[1]}:${m[2]}`; try{ const d=new Date('1970-01-01T'+x); return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`; }catch{ return x; } };
 
 const MATRICULAS=[ 
-"LV-KAY",
-"LV-KAH",
-"LV-KJD",
-"LV-KJE",
-"LV-KCE",
-"LV-KEH",
-"LV-KEG",
-"LV-KJF",
-"LV-HKS",
-"LV-AAR",
-"LV-KFW",
-"LV-PPM",
-"LY-MLN",
-"LY-MLI",
-"LY-MLK",
-"LY-MLJ",
-"LY-MLI",
-"LY-MLG",
-"LY-MLD",
-"LY-NVL",
-"LY-VEL",
-"PR-MLD",
-"PR-NVN" ];
+"LV-KAY","LV-KAH","LV-KJD","LV-KJE","LV-KCE","LV-KEH","LV-KEG","LV-KJF","LV-HKS","LV-AAR",
+"LV-KFW","LV-PPM","LY-MLN","LY-MLI","LY-MLK","LY-MLJ","LY-MLI","LY-MLG","LY-MLD","LY-NVL",
+"LY-VEL","PR-MLD","PR-NVN"
+];
 
 function fillMatriculas(sel){ sel.innerHTML='<option value=\"\">Seleccionar…</option>'+MATRICULAS.map(m=>`<option>${m}</option>`).join(''); }
 
@@ -56,10 +37,25 @@ async function initIndex(){
   $('#btnClearSig')?.addEventListener('click',()=>sig.clear());
   $('#cleaningForm')?.addEventListener('submit', async ev=>{
     ev.preventDefault();
-    const fd=new FormData(ev.target); fd.append('action','submitCleaning'); fd.append('firmaLimpiezaDataURL', sig.toDataURL());
-    const res=await fetch(WEB_APP_URL,{method:'POST', body:fd}); let data=null; try{data=await res.json();}catch{}
-    if(res.ok && data && data.ok){ alert('Registro enviado. ID: '+data.id); location.href='review.html?id='+encodeURIComponent(data.id); }
-    else{ alert('Error al enviar. Revisá consola.'); console.error('HTTP', res.status, res.statusText, data); }
+    const fd=new FormData(ev.target);
+    fd.append('action','submitCleaning');
+    fd.append('firmaLimpiezaDataURL', sig.toDataURL());
+
+    // Envío con cola offline (PWAQueue)
+    const out = await (window.PWAQueue?.submit
+      ? window.PWAQueue.submit(fd)
+      : fetch(WEB_APP_URL,{method:'POST', body:fd}).then(r=>r.json()));
+
+    if(out && out.ok){
+      alert('Registro enviado. ID: '+out.id);
+      location.href='review.html?id='+encodeURIComponent(out.id);
+    } else if (out && out.queued){
+      alert('Sin conexión. El envío quedó en cola y se reintentará automáticamente.');
+      location.href='list.html';
+    } else {
+      alert('Error al enviar. Revisá consola.');
+      console.error(out);
+    }
   });
 }
 
@@ -84,10 +80,10 @@ function renderRowsInto(tbody, rows) {
       <td class="center">${r.aeropuerto ?? ''}</td>
       <td class="center">${r.tipo_limpieza ?? ''}</td>
       <td class="center">
-  <span class="badge ${r.estado==='No aceptada' ? 'badge-noacept' : ''}">
-    ${r.estado ?? ''}
-  </span>
-</td>
+        <span class="badge ${r.estado==='No aceptada' ? 'badge-noacept' : ''}">
+          ${r.estado ?? ''}
+        </span>
+      </td>
       <td class="center table-actions">
         <a href="review.html?id=${encodeURIComponent(r.id)}">Ver</a>
         ${pdfCell ? ' · ' + pdfCell : ''}
@@ -138,6 +134,8 @@ async function initList() {
     }
 
     _rows = data.rows || [];
+    // cache local para offline
+    localStorage.setItem('fb_rows_cache', JSON.stringify(_rows));
 
     let total=_rows.length, acept=0, noacept=0, pend=0, mes=0, anio=0;
     const today=new Date();
@@ -165,8 +163,17 @@ async function initList() {
     applyFilters();
   } catch(e) {
     console.error(e);
-    $('#tbodyPend').innerHTML = '<tr><td colspan="7" class="center">Fallo de red</td></tr>';
-    $('#tbodyCerr').innerHTML = '<tr><td colspan="7" class="center">Fallo de red</td></tr>';
+    // Fallback offline: mostrar cache si existe
+    const cache = localStorage.getItem('fb_rows_cache');
+    if (cache){
+      _rows = JSON.parse(cache);
+      applyFilters();
+      $('#tbodyPend').insertAdjacentHTML('beforebegin', '<div class="small">Mostrando datos en caché (offline)</div>');
+      $('#tbodyCerr').insertAdjacentHTML('beforebegin', '<div class="small">Mostrando datos en caché (offline)</div>');
+    } else {
+      $('#tbodyPend').innerHTML = '<tr><td colspan="7" class="center">Fallo de red</td></tr>';
+      $('#tbodyCerr').innerHTML = '<tr><td colspan="7" class="center">Fallo de red</td></tr>';
+    }
   }
 }
 
@@ -179,19 +186,49 @@ async function initReview(){
   const r=data.row;
   const mapping={ fecha_limpieza:fmtISO(r.fecha_limpieza), hora_inicio:fmtHHMM(r.hora_inicio), hora_fin:fmtHHMM(r.hora_fin) };
   for(const [k,v] of Object.entries(r)){ const el=$('#ro_'+k); if(!el) continue; el.textContent=(k in mapping)?mapping[k]:(v??''); }
-  if(r.adjuntos_links){ const cont=$('#adj_clean'); r.adjuntos_links.split('\n').forEach(u=>{ const a=document.createElement('a'); a.href=u; a.textContent='Archivo'; a.target='_blank'; cont.appendChild(a); cont.appendChild(document.createTextNode(' ')); }); }
+  if(r.adjuntos_links){
+    const cont=$('#adj_clean');
+    r.adjuntos_links.split('\n').forEach(u=>{
+      const a=document.createElement('a'); a.href=u; a.textContent='Archivo'; a.target='_blank';
+      cont.appendChild(a); cont.appendChild(document.createTextNode(' '));
+    });
+  }
   if(r.pdf_file_id){ $('#pdf_link').href='https://drive.google.com/open?id='+r.pdf_file_id; }
 
   const form=$('#recepForm'); const sig=new SigPad($('#firmaRecepcion')); $('#recep_fecha').value=nowISO();
-  $('#btnHoraRecep').addEventListener('click',()=>$('#recep_hora').value=nowTime()); $('#btnBorrarFirmaR').addEventListener('click',()=>sig.clear());
+  $('#btnHoraRecep').addEventListener('click',()=>$('#recep_hora').value=nowTime());
+  $('#btnBorrarFirmaR').addEventListener('click',()=>sig.clear());
 
   const cerrado=(r.estado && r.estado!=='Pendiente de recepción');
-  if(cerrado){ const banner=document.createElement('div'); banner.className='banner-locked'; banner.textContent='Registro cerrado: ya no se puede modificar. Solo lectura.'; form.parentElement.insertBefore(banner, form); form.querySelectorAll('input,select,textarea,button').forEach(el=>{ if(el.tagName!=='A') el.disabled=true; }); }
+  if(cerrado){
+    const banner=document.createElement('div');
+    banner.className='banner-locked';
+    banner.textContent='Registro cerrado: ya no se puede modificar. Solo lectura.';
+    form.parentElement.insertBefore(banner, form);
+    form.querySelectorAll('input,select,textarea,button').forEach(el=>{ if(el.tagName!=='A') el.disabled=true; });
+  }
 
   form.addEventListener('submit', async ev=>{
-    ev.preventDefault(); const fd=new FormData(form); fd.append('action','submitReception'); fd.append('id', id); fd.append('firmaRecepDataURL', sig.toDataURL());
-    const res2=await fetch(WEB_APP_URL,{method:'POST', body:fd}); const out=await res2.json();
-    if(out.ok){ alert('Recepción enviada.'); location.reload(); } else { alert('Error: '+out.error); }
+    ev.preventDefault();
+    const fd=new FormData(form);
+    fd.append('action','submitReception');
+    fd.append('id', id);
+    fd.append('firmaRecepDataURL', sig.toDataURL());
+
+    const out = await (window.PWAQueue?.submit
+      ? window.PWAQueue.submit(fd)
+      : fetch(WEB_APP_URL,{method:'POST', body:fd}).then(r=>r.json()));
+
+    if(out && out.ok){
+      alert('Recepción enviada.');
+      location.reload();
+    } else if (out && out.queued){
+      alert('Sin conexión. La recepción quedó en cola y se reintentará.');
+      location.href='list.html';
+    } else {
+      alert('Error al enviar: '+(out && out.error || 'desconocido'));
+      console.error(out);
+    }
   });
 }
 
