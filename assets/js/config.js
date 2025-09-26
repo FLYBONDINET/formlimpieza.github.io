@@ -1,2 +1,2 @@
 // assets/js/config.js
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx2fTx90Mi4caagXHl3nezAVD8aL6PewU8nBQ3ZpmNJrpXzhK3rBR5vXKxom3nq3b6m/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx2aR8u98T_IGIPx6N2E5902A-rnzjhFC63n8pLvBvtXtIQ2F6Mse6iFuDVafPZ2Veg/exec";
