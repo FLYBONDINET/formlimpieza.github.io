@@ -40,30 +40,94 @@ function fillMatriculas(sel){
 }
 
 /* Signature pad */
-class SigPad{
+/* Signature pad (conserva trazos en resize y sólo si cambia el tamaño) */
+class SigPad {
   constructor(canvas){
-    this.canvas=canvas;
-    this.ctx=canvas.getContext('2d');
-    this.drawing=false;
-    this.resize();
-    window.addEventListener('resize',()=>this.resize());
-    canvas.addEventListener('pointerdown',e=>this.start(e));
-    canvas.addEventListener('pointermove',e=>this.move(e));
-    canvas.addEventListener('pointerup',()=>this.end());
-    canvas.addEventListener('pointerleave',()=>this.end());
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.drawing = false;
+    this._lastCssW = 0;
+    this._lastCssH = 0;
+    this._dpr = window.devicePixelRatio || 1;
+
+    this.resize(true); // init
+
+    // ⚠️ En móviles, abrir el teclado dispara resize. Conservamos el dibujo.
+    this._onResize = () => this.resize(true);
+    window.addEventListener('resize', this._onResize);
+
+    canvas.addEventListener('pointerdown', e => this.start(e));
+    canvas.addEventListener('pointermove', e => this.move(e));
+    canvas.addEventListener('pointerup',   () => this.end());
+    canvas.addEventListener('pointerleave',() => this.end());
   }
-  resize(){
-    const r=this.canvas.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
-    this.canvas.width=r.width*dpr; this.canvas.height=r.height*dpr;
-    this.ctx.setTransform(1,0,0,1,0,0); this.ctx.scale(dpr,dpr);
-    this.ctx.lineWidth=2; this.ctx.lineCap='round'; this.ctx.strokeStyle='#111';
+
+  resize(preserve = false){
+    const r = this.canvas.getBoundingClientRect();
+    const cssW = Math.round(r.width);
+    const cssH = Math.round(r.height);
+
+    // si no cambió el tamaño en CSS, no toco el canvas (evita borrado)
+    if (cssW === this._lastCssW && cssH === this._lastCssH) return;
+
+    let snapshot = null;
+    // guardo lo dibujado antes de cambiar width/height
+    if (preserve && this.canvas.width && this.canvas.height){
+      try { snapshot = this.canvas.toDataURL('image/png'); } catch(e){}
+    }
+
+    this._dpr = window.devicePixelRatio || 1;
+    this.canvas.width  = cssW * this._dpr;
+    this.canvas.height = cssH * this._dpr;
+    this._lastCssW = cssW;
+    this._lastCssH = cssH;
+
+    this.ctx.setTransform(1,0,0,1,0,0);
+    this.ctx.scale(this._dpr, this._dpr);
+    this.ctx.lineWidth = 2;
+    this.ctx.lineCap = 'round';
+    this.ctx.strokeStyle = '#111';
+
+    // restauro el dibujo manteniendo proporción
+    if (snapshot){
+      const img = new Image();
+      img.onload = () => {
+        // dibujar a tamaño CSS (no en píxeles físicos)
+        this.ctx.drawImage(img, 0, 0, cssW, cssH);
+      };
+      img.src = snapshot;
+    }
   }
-  start(e){ this.drawing=true; this.ctx.beginPath(); this.ctx.moveTo(e.offsetX,e.offsetY); }
-  move(e){ if(!this.drawing) return; this.ctx.lineTo(e.offsetX,e.offsetY); this.ctx.stroke(); }
-  end(){ this.drawing=false; }
-  clear(){ this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height); }
+
+  start(e){
+    this.drawing = true;
+    this.ctx.beginPath();
+    const { x, y } = this._point(e);
+    this.ctx.moveTo(x, y);
+  }
+
+  move(e){
+    if (!this.drawing) return;
+    const { x, y } = this._point(e);
+    this.ctx.lineTo(x, y);
+    this.ctx.stroke();
+  }
+
+  end(){ this.drawing = false; }
+
+  clear(){
+    // limpiar en coordenadas CSS
+    this.ctx.clearRect(0, 0, this._lastCssW, this._lastCssH);
+  }
+
   toDataURL(){ return this.canvas.toDataURL('image/png'); }
+
+  _point(e){
+    const rect = this.canvas.getBoundingClientRect();
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
 }
+
 
 /* ---- Index (alta) ---- */
 async function initIndex(){
