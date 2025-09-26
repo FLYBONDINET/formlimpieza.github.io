@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Flybondi · Detalle & Recepción</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/review.css">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#ffd200">
+  <link rel="icon" href="assets/icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+
   <script defer src="assets/js/config.js"></script>
-  <script>
-    (function(){
-      if (!window.WEB_APP_URL || typeof WEB_APP_URL !== 'string') {
-        window.WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyYhr6o0emb9JUUUbBA4Rmh3D-lzwztsmdLZICClnMzkfL_cvtOp5xZX_J3tgHyomLk/exec";
-      }
-    })();
-  </script>
   <script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/pwa.js"></script>
 </head>
 <body data-page="review">
   <header>
     <div class="header-inner">
-      <img src="assets/img/flybondi-logo.svg" alt="Flybondi" />
-      <div class="header-title">Detalle de Limpieza & Recepción / Cleaning & Handover Details</div>
+      <div class="brand">
+        <img src="assets/img/Manual 2022-49.png" alt="Flybondi">
+        <div class="header-title">Detalle de Limpieza & Recepción</div>
+      </div>
+      <div class="header-actions">
+        <button id="btnInstall" class="btn-outline" style="display:none">Instalar app</button>
+      </div>
     </div>
   </header>
   <main>

@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Flybondi · Registro de Limpieza</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- 1) Config primero -->
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/index.css">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#ffd200">
+  <link rel="icon" href="assets/icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+
   <script defer src="assets/js/config.js"></script>
-
-  <!-- 2) Fallback por si config.js no carga o está en cache rota -->
-  <script>
-    (function(){
-      if (!window.WEB_APP_URL || typeof WEB_APP_URL !== 'string') {
-        window.WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyYhr6o0emb9JUUUbBA4Rmh3D-lzwztsmdLZICClnMzkfL_cvtOp5xZX_J3tgHyomLk/exec";
-      }
-    })();
-  </script>
-
-  <!-- 3) Main después -->
   <script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/pwa.js"></script>
 </head>
 <body data-page="index">
   <header>
     <div class="header-inner">
-      <img src="assets/img/Manual%202022-49.png" alt="Flybondi" />
-      <div class="header-title">Registro de Limpieza de Aeronaves / Aircraft Cleaning Record</div>
+      <div class="brand">
+        <img src="assets/img/Manual 2022-49.png" alt="Flybondi">
+        <div class="header-title">Registro de Limpieza de Aeronaves</div>
+      </div>
+      <div class="header-actions">
+        <button id="btnInstall" class="btn-outline" style="display:none">Instalar app</button>
+      </div>
     </div>
   </header>
 
@@ -34,12 +35,11 @@
       <div class="hero-visual"></div>
       <div class="hero-body">
         <div>
-          <div class="hero-title">Operaciones de limpieza en línea / Line Cleaning Operations</div>
-          <div class="hero-sub">
-          </div>
+          <div class="hero-title">Operaciones de limpieza en línea</div>
+          <div class="hero-sub">Adjuntos a Drive (año/mes/día/matrícula) y PDF automático.</div>
         </div>
         <div class="row">
-          <a href="list.html" class="btn-ghost">Ver historial / Records</a>
+          <a href="list.html" class="btn-ghost">Ver historial</a>
         </div>
       </div>
     </div>
@@ -47,23 +47,23 @@
 
   <main>
     <div class="grid grid-2">
+      <!-- FORMULARIO ORIGINAL: pegá aquí el mismo <form id="cleaningForm"> que ya tenías funcionando -->
       <form id="cleaningForm" class="card" enctype="multipart/form-data">
-        <div class="section-title">Datos del servicio / Service Data </div>
-
+        <div class="section-title">Datos del servicio</div>
         <div class="grid-form grid-form-3">
           <div>
-            <div class="label">Fecha / Date </div>
-            <input type="date" id="fecha" name="fecha" required />
+            <div class="label">Fecha</div>
+            <input type="date" id="fecha" name="fecha" required>
             <div class="small">Formato: aaaa-mm-dd</div>
           </div>
           <div>
-            <div class="label">Matrícula / Registration</div>
+            <div class="label">Matrícula</div>
             <select id="matricula" name="matricula" required></select>
           </div>
           <div>
-            <div class="label">Aeropuerto / Airport </div>
+            <div class="label">Aeropuerto</div>
             <select id="aeropuerto" name="aeropuerto" required>
-              <option value="">Seleccionar… / Select… </option>
+              <option value="">Seleccionar…</option>
               <option value="AEP">AEP (Aeroparque)</option>
               <option value="EZE">EZE (Ezeiza)</option>
             </select>
@@ -72,76 +72,72 @@
 
         <div class="grid-form grid-form-3">
           <div>
-            <div class="label"> Posición / Stand or Gate</div>
-            <input type="text" id="posicion" name="posicion" placeholder="Ej: B23" required />
+            <div class="label">Posición</div>
+            <input type="text" id="posicion" name="posicion" placeholder="Ej: B23" required>
           </div>
           <div>
-            <div class="label">Tipo de limpieza / Type of Cleaning</div>
+            <div class="label">Tipo de limpieza</div>
             <select id="tipo_limpieza" name="tipo_limpieza" required>
-              <option value="">Seleccionar… / Select… </option>
-              <option>Limpieza superficial / Surface Cleaning</option>
-              <option>Limpieza completa / Full Cleaning</option>
-              <option>Limpieza profunda plus / Deep Cleaning Plus</option>
+              <option value="">Seleccionar…</option>
+              <option>Limpieza superficial</option>
+              <option>Limpieza completa</option>
+              <option>Limpieza profunda plus</option>
             </select>
           </div>
           <div class="kit">
-            <div class="label">Tiempos / Times</div>
+            <div class="label">Tiempos</div>
             <div class="row">
-              <input type="time" id="horaInicio" name="hora_inicio" required />
-              <button type="button" id="btnInicio" class="btn-ghost">Inicio / Start</button>
-              <input type="time" id="horaFin" name="hora_fin" required />
-              <button type="button" id="btnFin" class="btn-ghost">Fin / Finish</button>
+              <input type="time" id="horaInicio" name="hora_inicio" required>
+              <button type="button" id="btnInicio" class="btn-ghost">Inicio</button>
+              <input type="time" id="horaFin" name="hora_fin" required>
+              <button type="button" id="btnFin" class="btn-ghost">Fin</button>
             </div>
-            <div class="small">Podés ajustar manualmente si fue necesario. / You can adjust manually if necessary.</div>
+            <div class="small">Podés ajustar manualmente si fue necesario.</div>
           </div>
         </div>
 
         <div class="grid-form grid-form-2">
           <div>
-            <div class="label">Responsable de limpieza / Cleaning Supervisor</div>
-            <input type="text" id="responsable" name="responsable_limpieza" required />
+            <div class="label">Responsable de limpieza</div>
+            <input type="text" id="responsable" name="responsable_limpieza" required>
           </div>
           <div>
-            <div class="label">Firma (dibujar) / Signature</div>
+            <div class="label">Firma (dibujar)</div>
             <canvas id="firmaLimpieza" class="signature-pad"></canvas>
             <div class="row" style="margin-top:8px">
-              <button type="button" id="btnClearSig" class="btn-ghost">Borrar firma / Clear Signature</button>
+              <button type="button" id="btnClearSig" class="btn-ghost">Borrar firma</button>
             </div>
           </div>
         </div>
 
         <div class="grid-form">
           <div>
-            <div class="label">Observaciones / Remarks</div>
+            <div class="label">Observaciones</div>
             <textarea id="observaciones" name="observaciones" placeholder="Novedades, hallazgos, etc."></textarea>
           </div>
           <div>
-            <div class="label">Adjuntos (fotos, videos, etc.) / Attachments</div>
-            <input type="file" name="adjuntos" multiple />
-            <div class="small">
-            </div>
+            <div class="label">Adjuntos (fotos, videos, etc.)</div>
+            <input type="file" name="adjuntos" multiple>
+            <div class="small">Se guardarán en Drive y se listarán como links.</div>
           </div>
         </div>
 
         <div class="actions">
-          <button type="submit" class="btn-primary">Enviar registro / Submit Record</button>
-          <a class="btn-ghost" href="list.html">Ver historial / View Log</a>
+          <button type="submit" class="btn-primary">Enviar registro</button>
+          <a class="btn-ghost" href="list.html">Ver historial</a>
         </div>
       </form>
 
       <div class="card">
         <div class="section-title">Buenas prácticas</div>
         <div class="helper">
-          <div>✔</div>
-          <div><b>Documentá todo</b><br />Subí fotos de cabina, galley y lavatorios cuando detectes no conformidades.</div>
+          <div>✔</div><div><b>Documentá todo</b><br>Subí fotos de cabina, galley y lavatorios cuando detectes no conformidades.</div>
         </div>
         <div class="helper" style="margin-top:10px">
-          <div>⌚</div>
-          <div><b>Marcá los tiempos</b><br />Usá <i>Inicio</i> y <i>Fin</i> para dejar registro exacto.</div>
+          <div>⌚</div><div><b>Marcá los tiempos</b><br>Usá <i>Inicio</i> y <i>Fin</i> para dejar registro exacto.</div>
         </div>
         <div class="helper" style="margin-top:10px">
-          <div>✍️</div>
-          <div><b>Firmá en sitio</b><br />La firma digital valida la identidad del responsable de limpieza.</div>
+          <div>✍️</div><div><b>Firmá en sitio</b><br>La firma digital valida la identidad del responsable de limpieza.</div>
         </div>
       </div>
     </div>

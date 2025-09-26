@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Flybondi · Historial de Limpiezas</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/list.css">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#ffd200">
+  <link rel="icon" href="assets/icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+
   <script defer src="assets/js/config.js"></script>
-  <script>
-    (function(){
-      if (!window.WEB_APP_URL || typeof WEB_APP_URL !== 'string') {
-        window.WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyYhr6o0emb9JUUUbBA4Rmh3D-lzwztsmdLZICClnMzkfL_cvtOp5xZX_J3tgHyomLk/exec";
-      }
-    })();
-  </script>
   <script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/pwa.js"></script>
 </head>
 <body data-page="list">
   <header>
     <div class="header-inner">
-      <img src="assets/img/Manual%202022-49.png" alt="Flybondi" />
-      <div class="header-title">Historial de Limpiezas</div>
+      <div class="brand">
+        <img src="assets/img/Manual 2022-49.png" alt="Flybondi">
+        <div class="header-title">Historial de Limpiezas</div>
+      </div>
+      <div class="header-actions">
+        <button id="btnInstall" class="btn-outline" style="display:none">Instalar app</button>
+      </div>
     </div>
   </header>
 
   <main>
-    <!-- KPIs -->
     <div class="grid grid-3">
       <div class="kpi"><strong>Total</strong><div id="k_total">0</div></div>
       <div class="kpi"><strong>Aceptadas</strong><div id="k_acept">0</div></div>
@@ -34,31 +40,29 @@
       <div class="kpi"><strong>Año actual</strong><div id="k_anio">0</div></div>
     </div>
 
-    <!-- Filtros -->
     <div class="card">
       <div class="toolbar">
         <div>
           <label>Búsqueda</label>
-          <input type="text" id="f_query" placeholder="Matrícula, aeropuerto, tipo, estado…" />
+          <input type="text" id="f_query" placeholder="Matrícula, aeropuerto, tipo, estado…">
         </div>
         <div>
           <label>Desde (fecha)</label>
-          <input type="date" id="f_from" />
+          <input type="date" id="f_from">
         </div>
         <div>
           <label>Hasta (fecha)</label>
-          <input type="date" id="f_to" />
+          <input type="date" id="f_to">
         </div>
         <div>
-          <label>&nbsp;</label><br />
+          <label>&nbsp;</label><br>
           <a class="btn-outline" href="index.html">+ Nuevo</a>
         </div>
       </div>
     </div>
 
-    <!-- Pendientes -->
     <div class="card" id="cardPend" style="display:none">
-      <h3 style="margin:0 0 10px 0; text-align:center;">Pendientes de recepción</h3>
+      <h3>Pendientes de recepción</h3>
       <table>
         <thead>
           <tr>
@@ -75,12 +79,11 @@
           <tr><td colspan="7" class="center">Cargando…</td></tr>
         </tbody>
       </table>
-      <div class="footer-note">Filas <b>pendientes</b> se muestran en rojo claro.</div>
+      <div class="footer-note">Filas <b>pendientes</b> en rojo claro.</div>
     </div>
 
-    <!-- Cerrados -->
     <div class="card" id="cardCerr">
-      <h3 style="margin:0 0 10px 0; text-align:center;">Cerrados (Aceptadas / No aceptadas)</h3>
+      <h3>Cerrados (Aceptadas / No aceptadas)</h3>
       <table>
         <thead>
           <tr>
@@ -97,7 +100,7 @@
           <tr><td colspan="7" class="center">Cargando…</td></tr>
         </tbody>
       </table>
-      <div class="footer-note">Filas <b>cerradas</b> se muestran en verde claro.</div>
+      <div class="footer-note">Filas <b>cerradas</b> en verde claro.</div>
     </div>
   </main>
 </body>
